@@ -4,6 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_primary"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/image_photo"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="0dp"
+        android:src="@drawable/default_photo_song"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_title" />
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/notify_no_song_playing"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/view_control_background"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <View
+        android:id="@+id/view_control_background"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_80"
+        android:background="@color/color_primary_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_shuffle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_shuffle_white"
+        app:layout_constraintBottom_toTopOf="@id/view_control_background"
+        app:layout_constraintLeft_toLeftOf="@id/view_control_background"
+        app:layout_constraintRight_toLeftOf="@id/image_previous"
+        app:layout_constraintTop_toBottomOf="@id/view_control_background" />
+
+    <ImageView
+        android:id="@+id/image_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_previous_white"
+        app:layout_constraintBottom_toTopOf="@id/view_control_background"
+        app:layout_constraintLeft_toRightOf="@id/image_shuffle"
+        app:layout_constraintRight_toLeftOf="@id/image_play"
+        app:layout_constraintTop_toBottomOf="@id/view_control_background" />
+
+    <ImageView
+        android:id="@+id/image_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_play_white"
+        app:layout_constraintBottom_toTopOf="@id/view_control_background"
+        app:layout_constraintLeft_toRightOf="@id/image_previous"
+        app:layout_constraintRight_toLeftOf="@id/image_next"
+        app:layout_constraintTop_toBottomOf="@id/view_control_background" />
+
+    <ImageView
+        android:id="@+id/image_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_next_white"
+        app:layout_constraintBottom_toTopOf="@id/view_control_background"
+        app:layout_constraintLeft_toRightOf="@id/image_play"
+        app:layout_constraintRight_toLeftOf="@id/image_loop"
+        app:layout_constraintTop_toBottomOf="@id/view_control_background" />
+
+    <ImageView
+        android:id="@+id/image_loop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_loop_white"
+        app:layout_constraintBottom_toTopOf="@id/view_control_background"
+        app:layout_constraintLeft_toRightOf="@id/image_next"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_control_background" />
 </android.support.constraint.ConstraintLayout>
