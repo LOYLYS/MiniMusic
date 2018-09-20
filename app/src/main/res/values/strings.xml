@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Mini Music</string>
     <string name="notify_no_song_playing">No song</string>
+    <string name="text_time_null">00:00</string>
 </resources>

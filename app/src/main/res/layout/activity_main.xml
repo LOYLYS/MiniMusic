@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,30 +13,69 @@
         android:layout_width="@dimen/dp_250"
         android:layout_height="0dp"
         android:src="@drawable/default_photo_song"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/text_title"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:padding="@dimen/dp_10"
         android:text="@string/notify_no_song_playing"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/view_control_background"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintBottom_toTopOf="@id/seek_bar_playing"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_photo" />
+
+    <TextView
+        android:id="@+id/text_playing_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_5"
+        android:text="@string/text_time_null"
+        app:layout_constraintBottom_toTopOf="@id/seek_bar_playing"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/seek_bar_playing"
+        app:layout_constraintTop_toBottomOf="@id/seek_bar_playing" />
+
+    <SeekBar
+        android:id="@+id/seek_bar_playing"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        app:layout_constraintBottom_toTopOf="@id/view_control_background"
+        app:layout_constraintLeft_toRightOf="@id/text_playing_time"
+        app:layout_constraintRight_toLeftOf="@id/text_total_time"
+        app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+    <TextView
+        android:id="@+id/text_total_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:text="@string/text_time_null"
+        app:layout_constraintBottom_toTopOf="@id/seek_bar_playing"
+        app:layout_constraintLeft_toRightOf="@id/seek_bar_playing"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seek_bar_playing" />
 
     <View
         android:id="@+id/view_control_background"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp_80"
+        android:layout_height="@dimen/dp_70"
         android:background="@color/color_primary_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_playing_time" />
 
     <ImageView
         android:id="@+id/image_shuffle"
