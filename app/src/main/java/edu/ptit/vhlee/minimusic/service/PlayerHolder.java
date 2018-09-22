@@ -2,29 +2,47 @@ package edu.ptit.vhlee.minimusic.service;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.ptit.vhlee.minimusic.Constants;
+import edu.ptit.vhlee.minimusic.data.local.MusicStorage;
+import edu.ptit.vhlee.minimusic.data.model.Track;
 import edu.ptit.vhlee.minimusic.ui.MediaPlayerListener;
 
-public class PlayerHolder implements PlayerAdapter {
+public class PlayerHolder implements PlayerAdapter,
+        MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
     private Context mContext;
+    private int mTrackCurrentPosition;
     private MediaPlayer mPlayer;
+    private List<Track> mTracks;
     private MediaPlayerListener mPlayerListener;
 
     public PlayerHolder(Context context) {
         mContext = context;
     }
 
-    @Override
-    public void load(int resourceId) {
-        if (mPlayer == null) {
-            mPlayer = MediaPlayer.create(mContext, resourceId);
-        }
+    public void initList(List<Track> tracks) {
+        mTracks = new ArrayList<>();
+        mTracks = tracks;
+        mTrackCurrentPosition = 0;
+        load();
+        mPlayerListener.onStateChanged(MediaPlayerListener.State.PAUSED);
+        mPlayerListener.onTrackChange(tracks.get(mTrackCurrentPosition));
+    }
 
+    @Override
+    public void load() {
+        Track track = mTracks.get(mTrackCurrentPosition);
+        mPlayer = MediaPlayer.create(mContext, Uri.parse(track.getPath()));
         if (mPlayerListener != null) {
+            mPlayer.setOnCompletionListener(this);
             mPlayerListener.onStateChanged(MediaPlayerListener.State.PLAYING);
+            mPlayerListener.onTrackChange(track);
         }
     }
 
@@ -36,7 +54,8 @@ public class PlayerHolder implements PlayerAdapter {
 
     @Override
     public void play() {
-        if (mPlayer != null && !mPlayer.isPlaying()) mPlayer.start();
+        if (mPlayer == null) load();
+        else if (!mPlayer.isPlaying()) mPlayer.start();
         if (mPlayerListener != null) {
             mPlayerListener.onStateChanged(MediaPlayerListener.State.PLAYING);
         }
@@ -53,7 +72,7 @@ public class PlayerHolder implements PlayerAdapter {
 
     @Override
     public void seekTo(int position) {
-        if (mPlayer !=null) {
+        if (mPlayer != null) {
             mPlayer.seekTo(position);
         }
         if (mPlayerListener != null) {
@@ -63,27 +82,35 @@ public class PlayerHolder implements PlayerAdapter {
 
     @Override
     public void next() {
-
+        reset();
+        mTrackCurrentPosition++;
+        if (mTrackCurrentPosition == mTracks.size()) mTrackCurrentPosition = 0;
+        load();
+        play();
     }
 
     @Override
     public void previous() {
-
+        reset();
+        mTrackCurrentPosition--;
+        if (mTrackCurrentPosition < 0) mTrackCurrentPosition = mTracks.size() - 1;
+        load();
+        play();
     }
 
     @Override
     public void stop() {
-
+        mPlayer.stop();
     }
 
     @Override
     public void reset() {
-
+        mPlayer.reset();
     }
 
     @Override
     public void release() {
-
+        mPlayer.release();
     }
 
     @Override
@@ -92,8 +119,24 @@ public class PlayerHolder implements PlayerAdapter {
     }
 
     @Override
-    public void loop(int loopType) {
+    public void loop() {
+        if (mPlayer.isLooping()) {
+            mPlayer.setLooping(false);
+            mPlayerListener.onStateChanged(MediaPlayerListener.State.LOOP);
+        } else {
+            mPlayer.setLooping(true);
+            mPlayerListener.onStateChanged(MediaPlayerListener.State.NO_LOOP);
+        }
+    }
 
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        next();
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mediaPlayer) {
+        mPlayerListener.onTrackChange(mTracks.get(mTrackCurrentPosition));
     }
 
     public void setPlayerListener(MediaPlayerListener listener) {

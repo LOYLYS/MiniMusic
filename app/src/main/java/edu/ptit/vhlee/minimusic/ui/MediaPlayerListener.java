@@ -5,15 +5,17 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import edu.ptit.vhlee.minimusic.data.model.Track;
+
 public interface MediaPlayerListener {
-    @IntDef({State.INVALID, State.PLAYING, State.PAUSED, State.RESET, State.COMPLETED})
+    @IntDef({State.LOOP, State.PLAYING, State.PAUSED, State.NO_LOOP, State.COMPLETED})
     @Retention(RetentionPolicy.SOURCE)
     @interface State {
-        int INVALID = -1;
         int PLAYING = 0;
         int PAUSED = 1;
-        int RESET = 2;
-        int COMPLETED = 3;
+        int LOOP = 2;
+        int NO_LOOP = 3;
+        int COMPLETED = 4;
     }
 
     void onDurationChanged(int duration);
@@ -23,4 +25,6 @@ public interface MediaPlayerListener {
     void onStateChanged(@State int state);
 
     void onPlaybackCompleted();
+
+    void onTrackChange(Track track);
 }

@@ -8,7 +8,9 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import edu.ptit.vhlee.minimusic.R;
+import java.util.List;
+
+import edu.ptit.vhlee.minimusic.data.model.Track;
 import edu.ptit.vhlee.minimusic.ui.MediaPlayerListener;
 
 public class MusicService extends Service {
@@ -23,7 +25,6 @@ public class MusicService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mHolder.load(R.raw.sample_song);
     }
 
     @Override
@@ -52,8 +53,24 @@ public class MusicService extends Service {
         else mHolder.pause();
     }
 
+    public void initPlayList(List<Track> tracks) {
+        mHolder.initList(tracks);
+    }
+
     public void seekTo(int position) {
         mHolder.seekTo(position);
+    }
+
+    public void next() {
+        mHolder.next();
+    }
+
+    public void previous() {
+        mHolder.previous();
+    }
+
+    public void setLoop() {
+        mHolder.loop();
     }
 
     public void setMusicListener(MediaPlayerListener listener) {

@@ -1,7 +1,7 @@
 package edu.ptit.vhlee.minimusic.service;
 
 public interface PlayerAdapter {
-    void load(int resourceId);
+    void load();
 
     boolean isPlaying();
 
@@ -15,7 +15,6 @@ public interface PlayerAdapter {
 
     void previous();
 
-
     void stop();
 
     void reset();
@@ -24,5 +23,5 @@ public interface PlayerAdapter {
 
     void shuffle();
 
-    void loop(int loopType);
+    void loop();
 }
