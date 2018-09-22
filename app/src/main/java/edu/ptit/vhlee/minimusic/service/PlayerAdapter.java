@@ -1,5 +1,9 @@
 package edu.ptit.vhlee.minimusic.service;
 
+import java.util.List;
+
+import edu.ptit.vhlee.minimusic.ui.MediaPlayerListener;
+
 public interface PlayerAdapter {
     void load();
 
