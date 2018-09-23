@@ -1,30 +1,34 @@
-package edu.ptit.vhlee.minimusic;
+package edu.ptit.vhlee.minimusic.service;
 
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
-import java.util.List;
+import edu.ptit.vhlee.minimusic.R;
+import edu.ptit.vhlee.minimusic.ui.MediaPlayerListener;
 
-public class MusicService extends Service implements MusicPlayer {
+public class MusicService extends Service {
     private IBinder mIBinder;
+    private PlayerHolder mHolder;
 
     public MusicService() {
         mIBinder = new MusicBinder();
+        mHolder = new PlayerHolder(this);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        mHolder.load(R.raw.sample_song);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Nullable
@@ -43,48 +47,21 @@ public class MusicService extends Service implements MusicPlayer {
         super.onDestroy();
     }
 
-    @Override
-    public void playSong(MediaPlayer mediaPlayer) {
-        if (mediaPlayer != null) mediaPlayer.start();
+    public void play() {
+        if (!mHolder.isPlaying()) mHolder.play();
+        else mHolder.pause();
     }
 
-    @Override
-    public void pauseSong(MediaPlayer mediaPlayer) {
-        if (!mediaPlayer.isPlaying()) mediaPlayer.pause();
+    public void seekTo(int position) {
+        mHolder.seekTo(position);
     }
 
-    @Override
-    public void stopSong(MediaPlayer mediaPlayer) {
-
-    }
-
-    @Override
-    public void loopSong(MediaPlayer mediaPlayer) {
-
-    }
-
-    @Override
-    public void nextSong(MediaPlayer mediaPlayer) {
-
-    }
-
-    @Override
-    public void previousSong(MediaPlayer mediaPlayer) {
-
-    }
-
-    @Override
-    public void loopPlaylist(List<MediaPlayer> mediaPlayers) {
-
-    }
-
-    @Override
-    public void shufflePlaylist(List<MediaPlayer> mediaPlayers) {
-
+    public void setMusicListener(MediaPlayerListener listener) {
+        mHolder.setPlayerListener(listener);
     }
 
     public class MusicBinder extends Binder {
-        MusicService getMusicService() {
+        public MusicService getMusicService() {
             return MusicService.this;
         }
     }
