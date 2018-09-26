@@ -2,6 +2,8 @@ package edu.ptit.vhlee.minimusic.ui;
 
 import android.Manifest;
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -10,7 +12,6 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity
     private ServiceConnection mConnection;
     private MusicService mMusicService;
     private boolean mIsBoundService;
-    private boolean mPermission;
     private ImageView mShuffle;
     private ImageView mPrevious;
     private ImageView mPlay;
@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initUI() {
-        mPermission = false;
         mTracks = new ArrayList<>();
         mShuffle = findViewById(R.id.image_shuffle);
         mPrevious = findViewById(R.id.image_previous);
@@ -167,6 +166,10 @@ public class MainActivity extends AppCompatActivity
         SimpleDateFormat timeFormat =
                 new SimpleDateFormat(Constants.TIME_FORMAT_PATTERN, Locale.US);
         return timeFormat.format(milliseconds);
+    }
+
+    public static Intent getMainActivityIntent(Context context) {
+        return new Intent(context, MainActivity.class);
     }
 
     class SeekBarListener implements SeekBar.OnSeekBarChangeListener {

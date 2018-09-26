@@ -4,7 +4,9 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
-import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +50,7 @@ public class PlayerHolder implements PlayerAdapter,
 
     @Override
     public boolean isPlaying() {
-        if (mPlayer != null) return mPlayer.isPlaying();
-        return false;
+        return mPlayer != null && mPlayer.isPlaying();
     }
 
     @Override
@@ -137,6 +138,10 @@ public class PlayerHolder implements PlayerAdapter,
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mPlayerListener.onTrackChange(mTracks.get(mTrackCurrentPosition));
+    }
+
+    public Track getTrack() {
+        return mTracks.get(mTrackCurrentPosition);
     }
 
     public void setPlayerListener(MediaPlayerListener listener) {

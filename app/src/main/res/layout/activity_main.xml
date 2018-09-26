@@ -24,7 +24,7 @@
         android:layout_margin="@dimen/dp_20"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="@string/notify_no_song_playing"
+        android:text="@string/notify_no_song"
         android:textColor="@color/color_accent"
         android:textSize="@dimen/sp_25"
         android:textStyle="bold"
